@@ -25,7 +25,6 @@
 function Wor3d_Book() {
 
 	this.canvasList = new Array();
-
 }
 
 function Wor3d_MotionCanvas(sourceElem, fps) {

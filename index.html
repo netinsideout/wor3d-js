@@ -74,11 +74,11 @@
 	<script>
 
 		/* pseudo-constants */
+		var INVERSE_SENSI = 20;
 		var CUBE_SIZE = 1000;
 		var FONT_SIZE = 56;
 		var LINE_HEIGHT = 1.2 * FONT_SIZE;
 		var FONT = 'Normal ' + FONT_SIZE + 'px Verdana';
-		var INVERSE_SENSI = 20;
 		var FILL_STYLE = 'white';
 		var WRAP = true;
 		var WRAP_LENGTH = 30;
@@ -167,7 +167,6 @@
 		function drawSide() {
 
 			tex.update(TEXT);
-			
 			tex.graphics.strokeStyle = 'white';
 			tex.graphics.strokeRect(1,1,CUBE_SIZE-1,CUBE_SIZE-1);	
 		}
