@@ -86,8 +86,7 @@
 		var MARGIN_LEFT = FONT_SIZE;
 		var TEXT = "";
 
-		var camera, scene, renderer;
-		var mesh;
+		var camera, scene, renderer, tex, texture, mesh;
 
 		var isMouseDown = false;
 		var isMouseMoved = false;
@@ -107,6 +106,7 @@
 			  	TEXT = data;
 			  	$('#usertext').val(data);
 				initScene();
+				drawSide();
 			});
 
 			$('#userfont').val(FONT);
@@ -134,29 +134,23 @@
 			scene = new THREE.Scene();
 
 			var geometry = new THREE.CubeGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
-
-			var style = new Wor3d_TextStyle(FILL_STYLE, FONT, CUBE_SIZE, CUBE_SIZE, LINE_HEIGHT, MARGIN_LEFT, MARGIN_TOP, WRAP, WRAP_LENGTH);
+			var style = new Wor3d_TextStyle('black', FILL_STYLE, FONT, CUBE_SIZE, CUBE_SIZE, LINE_HEIGHT, MARGIN_LEFT, MARGIN_TOP, WRAP, WRAP_LENGTH);
 
 			//create texture
-			var bitmap = new Wor3d_TextCanvas(TEXT, style).domElement;
-			
-			var g = bitmap.getContext('2d');
-			g.strokeStyle = 'white';
-			g.strokeRect(1,1,CUBE_SIZE -1,CUBE_SIZE-1 );
+			tex = new Wor3d_TextCanvas(TEXT, style);
 			
 			// canvas contents will be used for a texture
-			var texture = new THREE.Texture(bitmap) 
+			texture = new THREE.Texture(tex.canvas); 
 			texture.needsUpdate = true;
+			texture.generateMipmaps = false;
 
-			var material = new THREE.MeshBasicMaterial( { map: texture, color: 0xffffff } );
+			var material = new THREE.MeshLambertMaterial( { map: texture, color: 0xffffff } );
 
 			mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
 
-			//
 			// create a point light
-			var pointLight =
-			  new THREE.PointLight(0xFFFFFF);
+			var pointLight = new THREE.PointLight(0xFFFFFF);
 
 			// set its position
 			pointLight.position.x = 0;
@@ -168,7 +162,14 @@
 
 			mesh.rotation.y -= 0.5;
 			mesh.rotation.x -= 0.5;
+		}
 
+		function drawSide() {
+
+			tex.update(TEXT);
+			
+			tex.graphics.strokeStyle = 'white';
+			tex.graphics.strokeRect(1,1,CUBE_SIZE-1,CUBE_SIZE-1);	
 		}
 
 		function animate() {
@@ -184,11 +185,11 @@
 				mesh.rotation.x -= dMouseY;
 
 				isMouseMoved = false;
-
 			}
 
 			if(renderer) {
-
+				texture.needsUpdate = true;
+				renderer.clear();
 				renderer.render( scene, camera );
 			}
 		}
@@ -228,8 +229,8 @@
 
 			console.log("onRenderClick");
 
-			document.body.removeChild( renderer.domElement );
-			renderer = null;
+			//document.body.removeChild( renderer.domElement );
+			//renderer = null;
 
 			TEXT = $('#usertext').val();
 			FONT = $('#userfont').val();
@@ -238,8 +239,9 @@
 			MARGIN_LEFT = parseInt( $('#userleft').val(), 10);
 			MARGIN_TOP = parseInt( $('#usertop').val(), 10);
 
-			initScene();
+			//initScene();
 
+			drawSide();
 		}
 
 	</script>
