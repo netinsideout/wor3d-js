@@ -155,7 +155,7 @@
 			// set its position
 			pointLight.position.x = 0;
 			pointLight.position.y = 0;
-			pointLight.position.z = 3000;
+			pointLight.position.z = 3*CUBE_SIZE;
 
 			// add to the scene
 			scene.add(pointLight);
@@ -178,9 +178,6 @@
 
 			if(isMouseDown) {
 
-				//console.log("dX:" + dMouseX);
-				//console.log("dY:" + dMouseY);	
-
 				mesh.rotation.y -= dMouseX;
 				mesh.rotation.x -= dMouseY;
 
@@ -200,12 +197,9 @@
 			camera.updateProjectionMatrix();
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
-
 		}
 
 		function onMouseDown(e) {
-			//console.log("onMouseDown");
-
 			isMouseDown = true;
 			refMouseX = e.pageX;
 			refMouseY = e.pageY;
@@ -227,19 +221,12 @@
 
 		function onRenderClick() {
 
-			console.log("onRenderClick");
-
-			//document.body.removeChild( renderer.domElement );
-			//renderer = null;
-
 			TEXT = $('#usertext').val();
 			FONT = $('#userfont').val();
 			WRAP_LENGTH = parseInt( $('#userwrap').val(), 10);
 			LINE_HEIGHT = parseInt( $('#userline').val(), 10);
 			MARGIN_LEFT = parseInt( $('#userleft').val(), 10);
 			MARGIN_TOP = parseInt( $('#usertop').val(), 10);
-
-			//initScene();
 
 			drawSide();
 		}

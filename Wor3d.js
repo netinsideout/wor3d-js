@@ -32,15 +32,22 @@ function Wor3d_MotionCanvas(sourceElem, fps) {
 	var periodMs = 1000 / fps;
 	var bitmap = document.createElement('canvas');
 	var g = bitmap.getContext('2d');
-	var sourceElem = sourceElem;
+	this.sourceElem = sourceElem;
+	var that = this;
 
-	function draw() {
-		g.drawImage(sourceElem)
+	this.draw = function draw() {
+		g.drawImage(sourceElem, 0, 0);
 		setTimeout(draw, periodMs);
 	}
 
+	this.update = function update(sourceElem) {
+		that.sourceElem = sourceElem;
+	}
+
+	this.draw();
+
 	/* setup object public members */
-	this.domElement = bitmap;
+	this.canvas = bitmap;
 }
 
 function Wor3d_TextStyle(bgColor, canvasFillStyle, font, width, height, lineheight, leftMargin, topMargin, wrap, wrapLength) {
