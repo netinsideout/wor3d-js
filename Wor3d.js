@@ -22,25 +22,44 @@
 	THE SOFTWARE.
 */
 
-function Disparat_TextCanvas(text, canvasFillStyle, font, width, height, lineheight, leftMargin, topMargin, wrap, wrapLength){
+function Wor3d_Book() {
+
+	this.canvasList = new Array();
+
+}
+
+function Wor3d_TextStyle(canvasFillStyle, font, width, height, lineheight, leftMargin, topMargin, wrap, wrapLength) {
+
+	this.fillStyle = canvasFillStyle;
+	this.font = font;
+	this.width = width;
+	this.height = height;
+	this.lineHeight = lineheight;
+	this.leftMargin = leftMargin;
+	this.topMargin = topMargin;
+	this.wrap = wrap;
+	this.wrapLength = wrapLength;
+}
+
+function Wor3d_TextCanvas(text, style){
 
 	/* Initialize objects */
-	if(!leftMargin) leftMargin = 0;
-	if(!topMargin) topMargin = 0;
-	if(!wrap) wrap = false; 
-	if(!wrapLength) wrap = false;
+	var leftMargin = style.leftMargin;
+	var topMargin = style.topMargin;
+	var wrap = style.wrap;
+	var wrapLength = style.wrapLength;
+	var lineheight = style.lineHeight;
 	var baseline = lineheight + topMargin;
 	var bitmap = document.createElement('canvas');
 	var g = bitmap.getContext('2d');
-	bitmap.width = width ;
-	bitmap.height = height ;
-	g.font = FONT;
+	bitmap.width = style.width ;
+	bitmap.height = style.height ;
+	g.font = style.font;
 
 	/* Basic mode: Break text up into lines from ASCII or HTML linebreaks */
 	var lines = text.split(/\r\n|\r|\n|<br>|<p>/g);
 
 	console.log("Total length: " + text.length);
-
 	console.log("Found " + (lines.length - 1) + " basic linebreaks");
 
 	/* Wrap mode: Check for too long lines and wrap them */
@@ -52,7 +71,6 @@ function Disparat_TextCanvas(text, canvasFillStyle, font, width, height, linehei
 				var numPieces = lines[i].length / wrapLength; //break into pieces
 				console.log(lines[i] + " " + numPieces);
 				for(var k=0;k<numPieces;k++) { //wrap pieces up
-
 					if(k == numPieces-1) { //last piece, fold on end of string
 						var str = lines[i].substring( k * wrapLength ) ;
 						lines2.push(str);
@@ -73,18 +91,14 @@ function Disparat_TextCanvas(text, canvasFillStyle, font, width, height, linehei
 	/* Draw text onto canvas */
 	for(var i=0;i<lines.length;i++) {
 		console.log(lines[i]);
-		g.fillStyle = canvasFillStyle;
+		g.fillStyle = style.fillStyle;
 		g.fillText(lines[i], leftMargin, baseline);
 		baseline += lineheight;
 	}
 
 	/* setup object public members */
 	this.domElement = bitmap;
-	var that = this;
 
-	this.getDomElement = function () {
-		return that.domElement;
-	}
-
-	//return bitmap;
+	//for debugging
+	//document.body.appendChild(bitmap);
 }

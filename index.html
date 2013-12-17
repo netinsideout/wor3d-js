@@ -128,17 +128,17 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			//
-
-			camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 6 * CUBE_SIZE  );
+			camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 6 * CUBE_SIZE);
 			camera.position.z = 1.3 * CUBE_SIZE;
 
 			scene = new THREE.Scene();
 
-			var geometry = new THREE.CubeGeometry( CUBE_SIZE , CUBE_SIZE , CUBE_SIZE  );
+			var geometry = new THREE.CubeGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
+
+			var style = new Wor3d_TextStyle(FILL_STYLE, FONT, CUBE_SIZE, CUBE_SIZE, LINE_HEIGHT, MARGIN_LEFT, MARGIN_TOP, WRAP, WRAP_LENGTH);
 
 			//create texture
-			var bitmap = new Disparat_TextCanvas(TEXT, FILL_STYLE, FONT, CUBE_SIZE, CUBE_SIZE, LINE_HEIGHT, MARGIN_LEFT, MARGIN_TOP, WRAP, WRAP_LENGTH).getDomElement();
+			var bitmap = new Wor3d_TextCanvas(TEXT, style).domElement;
 			
 			var g = bitmap.getContext('2d');
 			g.strokeStyle = 'white';
