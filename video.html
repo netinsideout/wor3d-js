@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Wor3d by DISPARAT - 3D-Text demo: Render any text on HTML5 canvas</title>
+    <title>Video 3D cube demo using Three.js</title>
     <meta charset="utf-8">
     <style>
       body {
@@ -41,10 +41,10 @@
 
       scene = new THREE.Scene();
 
-      //var tex = new Wor3d_MotionCanvas(video, 30);
+      var tex = new Wor3d_MotionCanvas(video, 50); //set framerate here
 
       var geometry = new THREE.CubeGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
-      var texture = new THREE.Texture( video ); 
+      var texture = new THREE.Texture( tex.canvas ); 
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
       texture.format = THREE.RGBFormat;
